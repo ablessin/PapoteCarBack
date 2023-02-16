@@ -8,18 +8,21 @@ import lombok.Setter;
 
 @Entity
 @Data
-@Table(name = "MESSAGE")
+@Table(name = "PLACE")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Message {
+public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String user;
     @Column(length = 150)
-    private String description;
+    private String name;
+    @Column(length = 150)
+    private String departement;
+    @Column(length = 150)
+    private String region;
     @ManyToOne
-    @JoinColumn(name="chat_id", nullable=false)
-    private Chat chat;
+    @JoinColumn(name="step_id", nullable=false)
+    private Step step;
 }

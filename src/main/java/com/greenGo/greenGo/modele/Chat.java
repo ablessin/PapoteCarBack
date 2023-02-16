@@ -6,20 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Data
-@Table(name = "MESSAGE")
+@Table(name = "CHAT")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Message {
+public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String user;
-    @Column(length = 150)
-    private String description;
-    @ManyToOne
-    @JoinColumn(name="chat_id", nullable=false)
-    private Chat chat;
+    @OneToMany(mappedBy = "chat")
+    private Set<Message> messages;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "trajet_id", referencedColumnName = "id")
+    private Trajet trajet;
+
 }
