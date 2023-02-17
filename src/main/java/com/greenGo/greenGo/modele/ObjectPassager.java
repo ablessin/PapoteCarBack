@@ -6,20 +6,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Data
-@Table(name = "MESSAGE")
+@Table(name = "OBJECTPASSAGER")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Message {
+public class ObjectPassager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String user;
-    @Column(length = 150)
-    private String description;
-    @ManyToOne
-    @JoinColumn(name="chat_id", nullable=false)
-    private Chat chat;
+
+    @OneToMany(mappedBy = "start")
+    public Set<Place> start;
+
+    @OneToMany(mappedBy = "end")
+    private Set<Place> end;
+
 }

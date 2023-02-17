@@ -35,12 +35,12 @@ public class MessageServiceImpl implements MessageService {
                     p.setDescription(message.getDescription());
                     p.setUser(message.getUser());
                     return messageRepository.save(p);
-                }).orElseThrow(() -> new RuntimeException("Trajet non trouvé"));
+                }).orElseThrow(() -> new RuntimeException("Message non trouvé"));
     }
 
     @Override
     public String supprimer(Long id) {
         messageRepository.deleteById(id);
-        return "Trajet supprimé";
+        return "Message supprimé";
     }
 }
