@@ -25,4 +25,12 @@ public class Place {
     @ManyToOne
     @JoinColumn(name="step_id", nullable=false)
     private Step step;
+
+    @ManyToOne
+    @JoinColumn(name="objectpassager_start_id", nullable=false)
+    private ObjectPassager start;
+
+    @ManyToOne
+    @JoinColumn(name="objectpassager_end_id", nullable=false)
+    private ObjectPassager end;
 }
