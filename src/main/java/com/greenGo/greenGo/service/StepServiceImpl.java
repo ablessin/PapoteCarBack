@@ -1,8 +1,6 @@
 package com.greenGo.greenGo.service;
 
-import com.greenGo.greenGo.modele.Chat;
 import com.greenGo.greenGo.modele.Step;
-import com.greenGo.greenGo.repository.ChatRepository;
 import com.greenGo.greenGo.repository.StepRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
