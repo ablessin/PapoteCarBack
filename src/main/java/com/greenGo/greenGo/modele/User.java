@@ -1,12 +1,10 @@
 package com.greenGo.greenGo.modele;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,7 +22,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 150)
-    private String name;
+    private String firstName;
     @Column(length = 150)
     private String username;
     @Column(length = 150)
@@ -33,9 +31,13 @@ public class User {
     private String email;
     @Column(length = 150)
     private String password;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @Column(length = 150)
+    private String gender;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "user_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private Set<Role> roles = new HashSet<>();
+    private String roles;
+
 }

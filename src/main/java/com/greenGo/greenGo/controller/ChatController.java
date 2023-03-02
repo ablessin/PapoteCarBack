@@ -3,6 +3,7 @@ package com.greenGo.greenGo.controller;
 import com.greenGo.greenGo.modele.Chat;
 import com.greenGo.greenGo.service.ChatService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,11 +16,13 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Chat create(@RequestBody Chat chat) {
         return  chatService.creer(chat);
     }
 
     @GetMapping("/read")
+    @PreAuthorize("hasRole('USER')")
     public List<Chat> read() {
         return chatService.lire();
     }
