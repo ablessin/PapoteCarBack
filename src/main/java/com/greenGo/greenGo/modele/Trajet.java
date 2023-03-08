@@ -6,7 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "TRAJET")
+@Table(name = "TRAJET",
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = "name")
+        })
 @Getter
 @Setter
 @NoArgsConstructor
