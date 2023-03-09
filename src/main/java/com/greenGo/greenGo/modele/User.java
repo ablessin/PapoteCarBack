@@ -3,6 +3,8 @@ package com.greenGo.greenGo.modele;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.swing.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,11 +35,16 @@ public class User {
     private String password;
     @Column(length = 150)
     private String gender;
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    private Set<Role> roles = new HashSet<>();
-    private String roles;
-
+    private String role;
+    @OneToMany(mappedBy = "user")
+    private Set<Notifications> notifications;
+    @OneToMany(mappedBy = "user")
+    private Set<ObjectPassager> objectPassager;
+    @OneToMany(mappedBy = "user")
+    private Set<Message> messages;
+    @OneToMany(mappedBy = "driver")
+    private Set<Trajet> trajets;
+//    private ImageIcon profilPicture;
+    private Date createdAt;
+    private Date updateAt;
 }

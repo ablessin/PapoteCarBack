@@ -33,7 +33,6 @@ public class TrajetServiceImpl implements TrajetService{
         return trajetRepository.findById(id)
                 .map(p-> {
                     p.setName(trajet.getName());
-                    p.setSteps(trajet.getSteps());
                     p.setDriver(trajet.getDriver());
                     p.setPassagers(trajet.getPassagers());
                     p.setPlaceMax(trajet.getPlaceMax());

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -18,10 +19,13 @@ public class Step {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "step")
-    private Set<Place> place;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "trajet_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name="place_id", nullable=false)
+    private Place place;
+    @ManyToOne
+    @JoinColumn(name = "trajet_id", nullable = false)
     private Trajet trajet;
     private Integer position;
+    private Date createdAt;
+    private Date updateAt;
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -18,7 +19,6 @@ public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String user;
     @OneToMany(mappedBy = "chat")
     private Set<Message> messages;
 
@@ -26,4 +26,6 @@ public class Chat {
     @JoinColumn(name = "trajet_id", referencedColumnName = "id")
     private Trajet trajet;
 
+    private Date createdAt;
+    private Date updateAt;
 }

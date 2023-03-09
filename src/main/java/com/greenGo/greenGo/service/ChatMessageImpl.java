@@ -35,7 +35,6 @@ public class ChatMessageImpl implements ChatService{
         return chatRepository.findById(id)
                 .map(p-> {
                     p.setMessages(chat.getMessages());
-                    p.setUser(chat.getUser());
                     p.setTrajet(chat.getTrajet());
                     return chatRepository.save(p);
                 }).orElseThrow(() -> new RuntimeException("Chat non trouvé"));

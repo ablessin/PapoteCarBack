@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
                     p.setEmail(user.getEmail());
                     p.setFirstName(user.getFirstName());
                     p.setSurname(user.getSurname());
-                    p.setRoles(user.getRoles());
+                    p.setRole(user.getRole());
                     return userRepository.save(p);
                 }).orElseThrow(() -> new RuntimeException("Step non trouvé"));
     }

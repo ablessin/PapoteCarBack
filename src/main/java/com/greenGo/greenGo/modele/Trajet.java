@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+import java.util.Set;
+
 @Entity
 @Table(name = "TRAJET",
         uniqueConstraints = {
@@ -19,9 +22,14 @@ public class Trajet {
     private Long id;
     @Column(length = 50)
     private String name;
-    @Column(length = 150)
-    private String driver;
-    private String steps;
-    private String passagers;
+    @ManyToOne
+    @JoinColumn(name="driver", nullable=false)
+    private User driver;
+    @OneToMany(mappedBy = "trajet")
+    private Set<Step> steps;
+    @OneToMany(mappedBy = "trajet")
+    private Set<ObjectPassager> passagers;
     private Integer placeMax;
+    private Date createdAt;
+    private Date updateAt;
 }

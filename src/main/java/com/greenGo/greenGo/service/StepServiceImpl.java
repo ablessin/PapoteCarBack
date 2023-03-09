@@ -32,7 +32,6 @@ public class StepServiceImpl implements StepService{
     public Step modifier(Long id, Step step) {
         return stepRepository.findById(id)
                 .map(p-> {
-                    p.setTrajet(step.getTrajet());
                     p.setPlace(step.getPlace());
                     p.setPosition(step.getPosition());
                     return stepRepository.save(p);

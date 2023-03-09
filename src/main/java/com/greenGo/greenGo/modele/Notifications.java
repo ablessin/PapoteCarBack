@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "NOTIFICATIONS")
@@ -20,7 +21,11 @@ public class Notifications {
     private Boolean activate;
     private String actionType;
     private Date date;
-    private String userId;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
+
     private String message;
     private Date createdAt;
     private Date updateAt;
