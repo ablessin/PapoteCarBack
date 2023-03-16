@@ -14,5 +14,7 @@ public interface ObjectPassagerService {
 
     ObjectPassager modifier(Long id, ObjectPassager objectPassager);
 
+    ObjectPassager accepted(Long id);
+
     String supprimer(Long id);
 }

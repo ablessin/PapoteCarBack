@@ -1,10 +1,13 @@
 package com.greenGo.greenGo.controller;
 
-import com.greenGo.greenGo.modele.Trajet;
+import com.greenGo.greenGo.modele.*;
+import com.greenGo.greenGo.service.NotificationsService;
 import com.greenGo.greenGo.service.TrajetService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +16,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TrajetController {
     private final TrajetService trajetService;
+    private final NotificationsService notificationsService;
 
     @PostMapping("/create")
     public Trajet create(@RequestBody Trajet trajet) {
@@ -34,6 +38,23 @@ public class TrajetController {
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
+        Optional<Trajet> trajet = trajetService.lireUn(id);
+        List<Notifications> list = new ArrayList<>();
+        trajet.get().getPassagers().stream().map(item -> {
+            Notifications notifications = new Notifications();
+            notifications.setActionType(ActionType.supTrajet);
+            notifications.setMessage("Le chat du trajet " + trajet.get().getName() + " a été supprimé");
+            notifications.setActivate(true);
+            LocalDate date = LocalDate.now();
+            notifications.setDate(date);
+            notifications.setCreatedAt(date);
+            notifications.setUpdateAt(date);
+            notifications.setUser(item.getUser());
+
+            return list.add(notifications);
+        });
+        list.stream().map(item -> notificationsService.creer(item));
+
         return  trajetService.supprimer(id);
     }
 }

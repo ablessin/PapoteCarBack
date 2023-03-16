@@ -1,12 +1,18 @@
 package com.greenGo.greenGo.controller;
 
+import com.greenGo.greenGo.modele.ActionType;
 import com.greenGo.greenGo.modele.Chat;
+import com.greenGo.greenGo.modele.Notifications;
 import com.greenGo.greenGo.service.ChatService;
+import com.greenGo.greenGo.service.NotificationsService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @RestController
@@ -14,6 +20,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ChatController {
     private final ChatService chatService;
+    private final NotificationsService notificationsService;
 
     @PostMapping("/create")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
@@ -37,6 +44,24 @@ public class ChatController {
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
+
+        Optional<Chat> chat = chatService.lireUn(id);
+        List<Notifications> list = new ArrayList<>();
+        chat.get().getTrajet().getPassagers().stream().map(item -> {
+            Notifications notifications = new Notifications();
+            notifications.setActionType(ActionType.supChat);
+            notifications.setMessage("Le chat du trajet " + chat.get().getTrajet().getName() + " a été supprimé");
+            notifications.setActivate(true);
+            LocalDate date = LocalDate.now();
+            notifications.setDate(date);
+            notifications.setCreatedAt(date);
+            notifications.setUpdateAt(date);
+            notifications.setUser(item.getUser());
+
+            return list.add(notifications);
+        });
+        list.stream().map(item -> notificationsService.creer(item));
+
         return  chatService.supprimer(id);
     }
 }

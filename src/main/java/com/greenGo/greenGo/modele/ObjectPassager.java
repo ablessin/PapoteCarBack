@@ -34,4 +34,5 @@ public class ObjectPassager {
     private Place end;
     private Date createdAt;
     private Date updateAt;
+    private Boolean isValided;
 }
