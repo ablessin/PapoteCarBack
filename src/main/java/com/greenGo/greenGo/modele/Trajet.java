@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -30,6 +31,6 @@ public class Trajet {
     @OneToMany(mappedBy = "trajet")
     private Set<ObjectPassager> passagers;
     private Integer placeMax;
-    private Date createdAt;
-    private Date updateAt;
+    private LocalDate createdAt;
+    private LocalDate updateAt;
 }

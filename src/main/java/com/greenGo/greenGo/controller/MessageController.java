@@ -1,7 +1,6 @@
 package com.greenGo.greenGo.controller;
 
 import com.greenGo.greenGo.modele.ActionType;
-import com.greenGo.greenGo.modele.Chat;
 import com.greenGo.greenGo.modele.Message;
 import com.greenGo.greenGo.modele.Notifications;
 import com.greenGo.greenGo.service.MessageService;

@@ -3,8 +3,10 @@ package com.greenGo.greenGo.controller;
 import com.greenGo.greenGo.modele.ActionType;
 import com.greenGo.greenGo.modele.Chat;
 import com.greenGo.greenGo.modele.Notifications;
+import com.greenGo.greenGo.modele.Trajet;
 import com.greenGo.greenGo.service.ChatService;
 import com.greenGo.greenGo.service.NotificationsService;
+import com.greenGo.greenGo.service.TrajetService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ import java.util.Optional;
 public class ChatController {
     private final ChatService chatService;
     private final NotificationsService notificationsService;
+    private final TrajetService trajetService;
 
     @PostMapping("/create")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
@@ -37,6 +40,11 @@ public class ChatController {
     @GetMapping("/read/{id}")
     public Optional<Chat> read(@PathVariable Long id) { return chatService.lireUn(id);}
 
+    @GetMapping("/read/{trajetId}")
+    public Optional<Chat> readTrajet(@PathVariable Long trjetId) {
+        Optional<Trajet> trajet = trajetService.lireUn(trjetId);
+        return chatService.lireByTrajet(trajet);
+    }
     @PutMapping("/update/{id}")
     public Chat update(@PathVariable Long id, @RequestBody Chat chat) {
         return chatService.modifier(id, chat);

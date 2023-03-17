@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -20,7 +20,11 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 150)
-    private String name;
+    private String city;
+    @Column(length = 150)
+    private String adress;
+    @Column(length = 150)
+    private String number;
     @Column(length = 150)
     private String departement;
     @Column(length = 150)
@@ -31,6 +35,6 @@ public class Place {
     private Set<ObjectPassager> start;
     @OneToMany(mappedBy = "end")
     private Set<ObjectPassager> end;
-    private Date createdAt;
-    private Date updateAt;
+    private LocalDate createdAt;
+    private LocalDate updateAt;
 }

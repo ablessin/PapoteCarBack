@@ -45,4 +45,5 @@ public class TrajetServiceImpl implements TrajetService{
         trajetRepository.deleteById(id);
         return "Trajet supprimé";
     }
+
 }

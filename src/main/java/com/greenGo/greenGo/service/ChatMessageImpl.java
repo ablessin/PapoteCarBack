@@ -31,6 +31,11 @@ public class ChatMessageImpl implements ChatService{
     }
 
     @Override
+    public Optional<Chat> lireByTrajet(Optional<Trajet> trajet) {
+        return chatRepository.findChatByTrajet(trajet);
+    }
+
+    @Override
     public Chat modifier(Long id, Chat chat) {
         return chatRepository.findById(id)
                 .map(p-> {

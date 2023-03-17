@@ -1,5 +1,6 @@
 package com.greenGo.greenGo.service;
 
+import com.greenGo.greenGo.modele.Place;
 import com.greenGo.greenGo.modele.Step;
 import com.greenGo.greenGo.repository.StepRepository;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,9 @@ public class StepServiceImpl implements StepService{
     public Optional<Step> lireUn(Long id) {
         return stepRepository.findById(id);
     }
+
+    @Override
+    public Optional<Step> lirePlace(Optional<Place> place) { return stepRepository.findStepByPlace(place);}
 
     @Override
     public Step modifier(Long id, Step step) {

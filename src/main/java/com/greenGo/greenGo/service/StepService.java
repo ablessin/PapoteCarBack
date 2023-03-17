@@ -1,6 +1,6 @@
 package com.greenGo.greenGo.service;
 
-import com.greenGo.greenGo.modele.Chat;
+import com.greenGo.greenGo.modele.Place;
 import com.greenGo.greenGo.modele.Step;
 
 import java.util.List;
@@ -10,6 +10,8 @@ public interface StepService {
     Step creer(Step step);
 
     List<Step> lire();
+
+    Optional<Step> lirePlace(Optional<Place> place);
 
     Optional<Step> lireUn(Long id);
 
