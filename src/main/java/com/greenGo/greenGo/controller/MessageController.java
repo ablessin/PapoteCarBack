@@ -6,6 +6,7 @@ import com.greenGo.greenGo.modele.Notifications;
 import com.greenGo.greenGo.service.MessageService;
 import com.greenGo.greenGo.service.NotificationsService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/message")
 @AllArgsConstructor
@@ -38,6 +40,7 @@ public class MessageController {
 
             return list.add(notifications);
         });
+        log.warn(list.toString());
         list.stream().map(item -> notificationsService.creer(item));
 
         return  messageService.creer(message);

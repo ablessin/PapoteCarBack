@@ -1,10 +1,7 @@
 package com.greenGo.greenGo.modele;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -20,14 +17,19 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 150)
+    @NonNull
     private String city;
     @Column(length = 150)
+    @NonNull
     private String adress;
     @Column(length = 150)
+    @NonNull
     private String number;
     @Column(length = 150)
+    @NonNull
     private String departement;
     @Column(length = 150)
+    @NonNull
     private String region;
     @OneToMany(mappedBy = "place")
     private Set<Step> step;

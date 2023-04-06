@@ -26,7 +26,7 @@ public class ChatController {
     private final TrajetService trajetService;
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+   // @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Chat create(@RequestBody Chat chat) {
         return  chatService.creer(chat);
     }

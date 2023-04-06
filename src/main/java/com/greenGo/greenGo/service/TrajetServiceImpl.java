@@ -3,11 +3,13 @@ package com.greenGo.greenGo.service;
 import com.greenGo.greenGo.modele.Trajet;
 import com.greenGo.greenGo.repository.TrajetRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class TrajetServiceImpl implements TrajetService{

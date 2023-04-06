@@ -3,6 +3,7 @@ package com.greenGo.greenGo.modele;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -30,6 +31,9 @@ public class Trajet {
     private Set<Step> steps;
     @OneToMany(mappedBy = "trajet")
     private Set<ObjectPassager> passagers;
+    @OneToMany(mappedBy = "trajet")
+    private Set<Chat> chats;
+    @NonNull
     private Integer placeMax;
     private LocalDate createdAt;
     private LocalDate updateAt;

@@ -1,10 +1,7 @@
 package com.greenGo.greenGo.modele;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -26,6 +23,7 @@ public class Step {
     @ManyToOne
     @JoinColumn(name = "trajet_id", nullable = false)
     private Trajet trajet;
+    @NonNull
     private Integer position;
     private LocalDate createdAt;
     private LocalDate updateAt;
