@@ -40,6 +40,15 @@ public class ObjectPassagerServiceImpl implements ObjectPassagerService{
     }
 
     @Override
+    public ObjectPassager accepted(Long id) {
+        return objectPassagerRepository.findById(id)
+                .map(p-> {
+                    p.setIsValided(true);
+                    return objectPassagerRepository.save(p);
+                }).orElseThrow(() -> new RuntimeException("Place non trouvé"));
+    }
+
+    @Override
     public String supprimer(Long id) {
         objectPassagerRepository.deleteById(id);
         return "Place supprimé";

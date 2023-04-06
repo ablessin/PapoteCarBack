@@ -1,11 +1,10 @@
 package com.greenGo.greenGo.modele;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -18,10 +17,14 @@ public class Step {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "step")
-    private Set<Place> place;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "trajet_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name="place_id", nullable=false)
+    private Place place;
+    @ManyToOne
+    @JoinColumn(name = "trajet_id", nullable = false)
     private Trajet trajet;
+    @NonNull
     private Integer position;
+    private LocalDate createdAt;
+    private LocalDate updateAt;
 }

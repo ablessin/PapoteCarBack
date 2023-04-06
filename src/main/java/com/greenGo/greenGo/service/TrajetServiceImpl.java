@@ -3,11 +3,13 @@ package com.greenGo.greenGo.service;
 import com.greenGo.greenGo.modele.Trajet;
 import com.greenGo.greenGo.repository.TrajetRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class TrajetServiceImpl implements TrajetService{
@@ -33,7 +35,6 @@ public class TrajetServiceImpl implements TrajetService{
         return trajetRepository.findById(id)
                 .map(p-> {
                     p.setName(trajet.getName());
-                    p.setSteps(trajet.getSteps());
                     p.setDriver(trajet.getDriver());
                     p.setPassagers(trajet.getPassagers());
                     p.setPlaceMax(trajet.getPlaceMax());
@@ -46,4 +47,5 @@ public class TrajetServiceImpl implements TrajetService{
         trajetRepository.deleteById(id);
         return "Trajet supprimé";
     }
+
 }

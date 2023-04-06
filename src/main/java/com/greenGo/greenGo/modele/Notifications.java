@@ -3,9 +3,10 @@ package com.greenGo.greenGo.modele;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "NOTIFICATIONS")
@@ -17,13 +18,19 @@ public class Notifications {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 50)
+    @NonNull
     private Boolean activate;
-    private String actionType;
-    private Date date;
-    private String userId;
+    @NonNull
+    private ActionType actionType;
+    @NonNull
+    private LocalDate date;
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
+    @NonNull
     private String message;
-    private Date createdAt;
-    private Date updateAt;
+    private LocalDate createdAt;
+    private LocalDate updateAt;
 
 }
 

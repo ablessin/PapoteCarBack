@@ -1,9 +1,8 @@
 package com.greenGo.greenGo.controller;
 
 import com.greenGo.greenGo.modele.Place;
-import com.greenGo.greenGo.modele.Trajet;
+import com.greenGo.greenGo.modele.PlaceChamp;
 import com.greenGo.greenGo.service.PlaceService;
-import com.greenGo.greenGo.service.TrajetService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +20,25 @@ public class PlaceController {
         return  placeService.creer(place);
     }
 
-    @GetMapping("/read")
-    public List<Place> read() {
-        return placeService.lire();
+    @GetMapping("/read/{champs}{value}")
+    public List<Place> read(@PathVariable PlaceChamp champs, @PathVariable String value) {
+
+        switch (champs) {
+            case city:
+                    placeService.search(PlaceChamp.city, value);
+            case adress:
+                placeService.search(PlaceChamp.adress, value);
+            case number:
+                placeService.search(PlaceChamp.number, value);
+            case region:
+                placeService.search(PlaceChamp.region, value);
+            case departement:
+                placeService.search(PlaceChamp.departement, value);
+            default:
+                return placeService.lire();
+        }
+
+//        return placeService.lire();
     }
 
     @GetMapping("/read/{id}")
