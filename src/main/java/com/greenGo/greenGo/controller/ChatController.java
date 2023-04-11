@@ -57,7 +57,7 @@ public class ChatController {
         List<Notifications> list = new ArrayList<>();
         chat.get().getTrajet().getPassagers().stream().map(item -> {
             Notifications notifications = new Notifications();
-            notifications.setActionType(ActionType.supChat);
+            notifications.setActionType(ActionType.supChat.toString());
             notifications.setMessage("Le chat du trajet " + chat.get().getTrajet().getName() + " a été supprimé");
             notifications.setActivate(true);
             LocalDate date = LocalDate.now();

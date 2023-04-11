@@ -39,20 +39,20 @@ public class TrajetController {
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         Optional<Trajet> trajet = trajetService.lireUn(id);
+//        Optional<User> user = userService.lireUn()
         List<Notifications> list = new ArrayList<>();
-        trajet.get().getPassagers().stream().map(item -> {
-            Notifications notifications = new Notifications();
-            notifications.setActionType(ActionType.supTrajet);
-            notifications.setMessage("Le chat du trajet " + trajet.get().getName() + " a été supprimé");
-            notifications.setActivate(true);
-            LocalDate date = LocalDate.now();
-            notifications.setDate(date);
-            notifications.setCreatedAt(date);
-            notifications.setUpdateAt(date);
-            notifications.setUser(item.getUser());
 
-            return list.add(notifications);
-        });
+        Notifications notifications = new Notifications();
+        notifications.setActionType(ActionType.supTrajet.toString());
+        notifications.setMessage("Le chat du trajet " + trajet.get().getName() + " a été supprimé");
+        notifications.setActivate(true);
+        LocalDate date = LocalDate.now();
+        notifications.setDate(date);
+        notifications.setCreatedAt(date);
+        notifications.setUpdateAt(date);
+        notifications.setUser(item.getUser());
+
+            list.add(notifications);
         list.stream().map(item -> notificationsService.creer(item));
 
         return  trajetService.supprimer(id);

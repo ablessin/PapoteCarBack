@@ -25,7 +25,7 @@ public class ObjectPassagerController {
 
         if (canCreate) {
             Notifications notifications = new Notifications();
-            notifications.setActionType(ActionType.newUserTrajet);
+            notifications.setActionType(ActionType.newUserTrajet.toString());
             notifications.setMessage("Un nouveau passager voudrait s'ajoutter à votre trajet " +
                     objectPassager.getTrajet().getName());
             notifications.setActivate(true);
@@ -48,7 +48,7 @@ public class ObjectPassagerController {
         List<Notifications> list = new ArrayList<>();
         objectPassager.getTrajet().getPassagers().stream().map(item -> {
             Notifications notifications = new Notifications();
-            notifications.setActionType(ActionType.validUserTrajet);
+            notifications.setActionType(ActionType.validUserTrajet.toString());
             notifications.setMessage("Un nouveau passager a été ajouté au trajet " +
                     objectPassager.getTrajet().getName());
             notifications.setActivate(true);
@@ -85,7 +85,7 @@ public class ObjectPassagerController {
 
         objectPassager.get().getTrajet().getPassagers().stream().map(item -> {
             Notifications notifications = new Notifications();
-            notifications.setActionType(ActionType.supUserTrajet);
+            notifications.setActionType(ActionType.supUserTrajet.toString());
             notifications.setMessage("L'utilisateur " + objectPassager.get().getUser().getFirstName() +
                     " a été supprimé du trajet " + objectPassager.get().getTrajet().getName());
             notifications.setActivate(true);

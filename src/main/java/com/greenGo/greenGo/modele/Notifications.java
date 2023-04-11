@@ -21,7 +21,7 @@ public class Notifications {
     @NonNull
     private Boolean activate;
     @NonNull
-    private ActionType actionType;
+    private String actionType;
     @NonNull
     private LocalDate date;
     @ManyToOne
