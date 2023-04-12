@@ -3,39 +3,56 @@ package com.greenGo.greenGo.controller;
 import com.greenGo.greenGo.modele.*;
 import com.greenGo.greenGo.service.NotificationsService;
 import com.greenGo.greenGo.service.ObjectPassagerService;
+import com.greenGo.greenGo.service.TrajetService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+@Slf4j
 @RestController
 @RequestMapping("/objectPassager")
 @AllArgsConstructor
 public class ObjectPassagerController {
     private final ObjectPassagerService objectPassagerService;
     private final NotificationsService notificationsService;
+    private final TrajetService trajetService;
 
     @PostMapping("/create")
     public ObjectPassager create(@RequestBody ObjectPassager objectPassager) {
-
-        Boolean canCreate = verifNbPlace(objectPassager.getTrajet(), objectPassager);
+        log.warn(objectPassager.getTrajet().getId().toString());
+        Trajet trajet = trajetService.lireUn(objectPassager.getTrajet().getId());
+        log.warn(trajet.toString());
+        Boolean canCreate = verifNbPlace(trajet, objectPassager);
+//
+//        Set<ObjectPassager> userList = trajet.getPassagers();
+//        List<Notifications> list = new ArrayList<>();
 
         if (canCreate) {
-            Notifications notifications = new Notifications();
-            notifications.setActionType(ActionType.newUserTrajet);
-            notifications.setMessage("Un nouveau passager voudrait s'ajoutter à votre trajet " +
-                    objectPassager.getTrajet().getName());
-            notifications.setActivate(true);
-            LocalDate date = LocalDate.now();
-            notifications.setDate(date);
-            notifications.setCreatedAt(date);
-            notifications.setUpdateAt(date);
-            notifications.setUser(objectPassager.getTrajet().getDriver());
-
-            notificationsService.creer(notifications);
+//            for (ObjectPassager user: userList) {
+//                Notifications notifications = new Notifications();
+//
+//                notifications.setActionType(ActionType.newUserTrajet.toString());
+//                notifications.setMessage("Un nouveau passager voudrait s'ajoutter à votre trajet " +
+//                        trajet.getName());
+//                notifications.setActivate(true);
+//                LocalDate date = LocalDate.now();
+//                notifications.setDate(date);
+//                notifications.setCreatedAt(date);
+//                notifications.setUpdateAt(date);
+//                notifications.setUser(user.getUser());
+//
+//                list.add(notifications);
+//            }
+//
+//            for (Notifications notifications: list) {
+//                notificationsService.creer(notifications);
+//            }
 
             return objectPassagerService.creer(objectPassager);
         }
@@ -46,20 +63,24 @@ public class ObjectPassagerController {
     public ObjectPassager accepted(@PathVariable Long id, @RequestBody ObjectPassager objectPassager) {
 
         List<Notifications> list = new ArrayList<>();
-        objectPassager.getTrajet().getPassagers().stream().map(item -> {
+        Trajet trajet = objectPassager.getTrajet();
+        Set<ObjectPassager> objectPassagers = trajet.getPassagers();
+
+        for (ObjectPassager user: objectPassagers) {
             Notifications notifications = new Notifications();
-            notifications.setActionType(ActionType.validUserTrajet);
+            notifications.setActionType(ActionType.validUserTrajet.toString());
             notifications.setMessage("Un nouveau passager a été ajouté au trajet " +
-                    objectPassager.getTrajet().getName());
+                    trajet.getName());
             notifications.setActivate(true);
             LocalDate date = LocalDate.now();
             notifications.setDate(date);
             notifications.setCreatedAt(date);
             notifications.setUpdateAt(date);
-            notifications.setUser(item.getUser());
+            notifications.setUser(user.getUser());
 
-            return list.add(notifications);
-        });
+            list.add(notifications);
+        }
+
         list.stream().map(item -> notificationsService.creer(item));
 
         return  objectPassagerService.accepted(id);
@@ -71,7 +92,9 @@ public class ObjectPassagerController {
     }
 
     @GetMapping("/read/{id}")
-    public Optional<ObjectPassager> read(@PathVariable Long id) { return objectPassagerService.lireUn(id);}
+    public ObjectPassager read(@PathVariable Long id) {
+        return objectPassagerService.lireUn(id);
+    }
 
     @PutMapping("/update/{id}")
     public ObjectPassager update(@PathVariable Long id, @RequestBody ObjectPassager objectPassager) {
@@ -80,23 +103,29 @@ public class ObjectPassagerController {
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        Optional<ObjectPassager> objectPassager = objectPassagerService.lireUn(id);
         List<Notifications> list = new ArrayList<>();
 
-        objectPassager.get().getTrajet().getPassagers().stream().map(item -> {
+        ObjectPassager objectPassager = objectPassagerService.lireUn(id);
+
+        Trajet trajet = objectPassager.getTrajet();
+        Set<ObjectPassager> objectPassagers = trajet.getPassagers();
+
+        for (ObjectPassager user: objectPassagers) {
             Notifications notifications = new Notifications();
-            notifications.setActionType(ActionType.supUserTrajet);
-            notifications.setMessage("L'utilisateur " + objectPassager.get().getUser().getFirstName() +
-                    " a été supprimé du trajet " + objectPassager.get().getTrajet().getName());
+
+            notifications.setActionType(ActionType.supUserTrajet.toString());
+            notifications.setMessage("L'utilisateur " + user.getUser().getFirstName() +
+                    " a été supprimé du trajet " + trajet.getName());
             notifications.setActivate(true);
             LocalDate date = LocalDate.now();
             notifications.setDate(date);
             notifications.setCreatedAt(date);
             notifications.setUpdateAt(date);
-            notifications.setUser(item.getUser());
+            notifications.setUser(user.getUser());
 
-            return list.add(notifications);
-        });
+            list.add(notifications);
+        }
+
         list.stream().map(item -> notificationsService.creer(item));
 
         return  objectPassagerService.supprimer(id);

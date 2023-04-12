@@ -17,17 +17,16 @@ public class Notifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 50)
-    @NonNull
+    @Column(length = 50, nullable = false)
     private Boolean activate;
-    @NonNull
-    private ActionType actionType;
-    @NonNull
+    @Column(nullable = false)
+    private String actionType;
+    @Column(nullable = false)
     private LocalDate date;
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
     private User user;
-    @NonNull
+    @Column(nullable = false)
     private String message;
     private LocalDate createdAt;
     private LocalDate updateAt;

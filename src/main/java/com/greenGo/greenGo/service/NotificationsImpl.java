@@ -25,8 +25,8 @@ public class NotificationsImpl implements NotificationsService{
     }
 
     @Override
-    public Optional<Notifications> lireUn(Long id) {
-        return notificationsRepository.findById(id);
+    public Notifications lireUn(Long id) {
+        return notificationsRepository.findAllById(id);
     }
 
     @Override

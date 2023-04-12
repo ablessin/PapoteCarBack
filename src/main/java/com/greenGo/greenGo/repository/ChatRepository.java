@@ -7,5 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ChatRepository extends JpaRepository<Chat, Long> {
-    Optional<Chat> findChatByTrajet(Optional<Trajet> trajet);
+    Chat findChatByTrajet(Trajet trajet);
+
+    Chat findAllById(Long id);
 }

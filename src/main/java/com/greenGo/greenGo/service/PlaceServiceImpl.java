@@ -45,8 +45,8 @@ public class PlaceServiceImpl implements PlaceService{
     }
 
     @Override
-    public Optional<Place> lireUn(Long id) {
-        return placeRepository.findById(id);
+    public Place lireUn(Long id) {
+        return placeRepository.findAllById(id);
     }
 
     @Override

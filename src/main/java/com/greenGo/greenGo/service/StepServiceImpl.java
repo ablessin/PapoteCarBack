@@ -25,12 +25,12 @@ public class StepServiceImpl implements StepService{
     }
 
     @Override
-    public Optional<Step> lireUn(Long id) {
-        return stepRepository.findById(id);
+    public Step lireUn(Long id) {
+        return stepRepository.findAllById(id);
     }
 
     @Override
-    public Optional<Step> lirePlace(Optional<Place> place) { return stepRepository.findStepByPlace(place);}
+    public Step lirePlace(Place place) { return stepRepository.findStepByPlace(place);}
 
     @Override
     public Step modifier(Long id, Step step) {

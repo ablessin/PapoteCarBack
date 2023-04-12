@@ -10,7 +10,7 @@ public interface MessageService {
 
     List<Message> lire();
 
-    Optional<Message> lireUn(Long id);
+    Message lireUn(Long id);
 
     Message modifier(Long id, Message message);
 

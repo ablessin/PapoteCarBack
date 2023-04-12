@@ -26,8 +26,8 @@ public class TrajetServiceImpl implements TrajetService{
     }
 
     @Override
-    public Optional<Trajet> lireUn(Long id) {
-        return trajetRepository.findById(id);
+    public Trajet lireUn(Long id) {
+        return trajetRepository.findAllById(id);
     }
 
     @Override

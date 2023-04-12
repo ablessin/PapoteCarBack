@@ -26,7 +26,7 @@ public class NotificationsController {
     }
 
     @GetMapping("/read/{id}")
-    public Optional<Notifications> read(@PathVariable Long id) { return notificationsservice.lireUn(id);}
+    public Notifications read(@PathVariable Long id) { return notificationsservice.lireUn(id);}
 
     @PutMapping("/update/{id}")
     public Notifications update(@PathVariable Long id, @RequestBody Notifications notifications) {

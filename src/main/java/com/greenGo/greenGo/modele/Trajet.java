@@ -1,5 +1,6 @@
 package com.greenGo.greenGo.modele;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Trajet {
     @Column(length = 50)
     private String name;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="driver", nullable=false)
     private User driver;
     @OneToMany(mappedBy = "trajet")
@@ -33,7 +35,7 @@ public class Trajet {
     private Set<ObjectPassager> passagers;
     @OneToMany(mappedBy = "trajet")
     private Set<Chat> chats;
-    @NonNull
+    @Column(nullable = false)
     private Integer placeMax;
     private LocalDate createdAt;
     private LocalDate updateAt;
