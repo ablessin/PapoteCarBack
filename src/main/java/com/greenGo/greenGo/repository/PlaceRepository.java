@@ -12,4 +12,5 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     Optional<Place> findPlaceByDepartement(String departement);
     Optional<Place> findPlaceByCity(String city);
 
+    Place findAllById(Long id);
 }

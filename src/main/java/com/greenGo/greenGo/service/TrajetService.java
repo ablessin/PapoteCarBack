@@ -10,7 +10,7 @@ public interface TrajetService {
 
     List<Trajet> lire();
 
-    Optional<Trajet> lireUn(Long id);
+    Trajet lireUn(Long id);
 
     Trajet modifier(Long id, Trajet trajet);
 

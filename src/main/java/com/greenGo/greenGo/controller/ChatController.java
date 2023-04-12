@@ -1,9 +1,6 @@
 package com.greenGo.greenGo.controller;
 
-import com.greenGo.greenGo.modele.ActionType;
-import com.greenGo.greenGo.modele.Chat;
-import com.greenGo.greenGo.modele.Notifications;
-import com.greenGo.greenGo.modele.Trajet;
+import com.greenGo.greenGo.modele.*;
 import com.greenGo.greenGo.service.ChatService;
 import com.greenGo.greenGo.service.NotificationsService;
 import com.greenGo.greenGo.service.TrajetService;
@@ -12,10 +9,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/chat")
@@ -38,11 +33,11 @@ public class ChatController {
     }
 
     @GetMapping("/read/{id}")
-    public Optional<Chat> read(@PathVariable Long id) { return chatService.lireUn(id);}
+    public Chat read(@PathVariable Long id) { return chatService.lireUn(id);}
 
     @GetMapping("/read/{trajetId}")
-    public Optional<Chat> readTrajet(@PathVariable Long trjetId) {
-        Optional<Trajet> trajet = trajetService.lireUn(trjetId);
+    public Chat readTrajet(@PathVariable Long trjetId) {
+        Trajet trajet = trajetService.lireUn(trjetId);
         return chatService.lireByTrajet(trajet);
     }
     @PutMapping("/update/{id}")
@@ -52,22 +47,26 @@ public class ChatController {
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-
-        Optional<Chat> chat = chatService.lireUn(id);
         List<Notifications> list = new ArrayList<>();
-        chat.get().getTrajet().getPassagers().stream().map(item -> {
+        Chat chat = chatService.lireUn(id);
+        Set<Message> messages = chat.getMessages();
+        Map<User, List<Message>> userListMap = messages.stream()
+                .collect(Collectors.groupingBy(Message::getUser));
+
+        for (Map.Entry<User, List<Message>> user: userListMap.entrySet()) {
             Notifications notifications = new Notifications();
             notifications.setActionType(ActionType.supChat.toString());
-            notifications.setMessage("Le chat du trajet " + chat.get().getTrajet().getName() + " a été supprimé");
+            notifications.setMessage("Le chat du trajet " + chat.getTrajet().getName() + " a été supprimé");
             notifications.setActivate(true);
             LocalDate date = LocalDate.now();
             notifications.setDate(date);
             notifications.setCreatedAt(date);
             notifications.setUpdateAt(date);
-            notifications.setUser(item.getUser());
+            notifications.setUser(user.getKey());
 
-            return list.add(notifications);
-        });
+            list.add(notifications);
+        }
+
         list.stream().map(item -> notificationsService.creer(item));
 
         return  chatService.supprimer(id);

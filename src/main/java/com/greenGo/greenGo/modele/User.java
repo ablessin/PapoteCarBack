@@ -3,10 +3,7 @@ package com.greenGo.greenGo.modele;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.swing.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,25 +20,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String firstName;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String username;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String surname;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String email;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String password;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String gender;
-    @NonNull
+    @Column(nullable = false)
     private String role;
     @OneToMany(mappedBy = "user")
     private Set<Notifications> notifications;

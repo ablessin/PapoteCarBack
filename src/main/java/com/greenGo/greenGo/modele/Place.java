@@ -16,20 +16,15 @@ public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String city;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String adress;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String number;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String departement;
-    @Column(length = 150)
-    @NonNull
+    @Column(length = 150, nullable = false)
     private String region;
     @OneToMany(mappedBy = "place")
     private Set<Step> step;

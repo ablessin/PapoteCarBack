@@ -10,7 +10,7 @@ public interface UserService {
 
     List<User> lire();
 
-    Optional<User> lireUn(Long id);
+    User lireUn(Long id);
 
     Boolean existsByEmail(String email);
 

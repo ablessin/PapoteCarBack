@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<User> lireUn(Long id) {
-        return userRepository.findById(id);
+    public User lireUn(Long id) {
+        return userRepository.findAllById(id);
     }
 
     @Override

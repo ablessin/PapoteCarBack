@@ -13,7 +13,7 @@ public interface NotificationsService {
 
     List<Notifications> lire();
 
-    Optional<Notifications> lireUn(Long id);
+    Notifications lireUn(Long id);
 
     Notifications modifier(Long id, Notifications notifications);
 

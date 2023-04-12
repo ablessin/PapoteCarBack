@@ -10,7 +10,7 @@ public interface ObjectPassagerService {
 
     List<ObjectPassager> lire();
 
-    Optional<ObjectPassager> lireUn(Long id);
+    ObjectPassager lireUn(Long id);
 
     ObjectPassager modifier(Long id, ObjectPassager objectPassager);
 

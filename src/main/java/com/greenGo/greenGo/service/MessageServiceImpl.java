@@ -24,8 +24,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Optional<Message> lireUn(Long id) {
-        return messageRepository.findById(id);
+    public Message lireUn(Long id) {
+        return messageRepository.findAllById(id);
     }
 
     @Override

@@ -24,8 +24,8 @@ public class ObjectPassagerServiceImpl implements ObjectPassagerService{
     }
 
     @Override
-    public Optional<ObjectPassager> lireUn(Long id) {
-        return objectPassagerRepository.findById(id);
+    public ObjectPassager lireUn(Long id) {
+        return objectPassagerRepository.findAllById(id);
     }
 
     @Override

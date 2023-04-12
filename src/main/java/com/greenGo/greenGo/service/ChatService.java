@@ -11,8 +11,8 @@ public interface ChatService {
 
     List<Chat> lire();
 
-    Optional<Chat> lireUn(Long id);
-    Optional<Chat> lireByTrajet(Optional<Trajet> trajet);
+    Chat lireUn(Long id);
+    Chat lireByTrajet(Trajet trajet);
 
     Chat modifier(Long id, Chat chat);
 

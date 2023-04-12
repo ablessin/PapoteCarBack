@@ -8,5 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StepRepository extends JpaRepository<Step, Long> {
-    Optional<Step> findStepByPlace(Optional<Place> place);
+    Step findStepByPlace(Place place);
+
+    Step findAllById(Long id);
 }

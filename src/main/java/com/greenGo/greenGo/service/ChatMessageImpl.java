@@ -26,12 +26,12 @@ public class ChatMessageImpl implements ChatService{
     }
 
     @Override
-    public Optional<Chat> lireUn(Long id) {
-        return chatRepository.findById(id);
+    public Chat lireUn(Long id) {
+        return chatRepository.findAllById(id);
     }
 
     @Override
-    public Optional<Chat> lireByTrajet(Optional<Trajet> trajet) {
+    public Chat lireByTrajet(Trajet trajet) {
         return chatRepository.findChatByTrajet(trajet);
     }
 

@@ -13,7 +13,7 @@ public interface PlaceService {
 
     List<Place> search(PlaceChamp champ, String value);
 
-    Optional<Place> lireUn(Long id);
+    Place lireUn(Long id);
 
     Place modifier(Long id, Place place);
 

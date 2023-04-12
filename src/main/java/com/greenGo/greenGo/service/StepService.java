@@ -11,9 +11,9 @@ public interface StepService {
 
     List<Step> lire();
 
-    Optional<Step> lirePlace(Optional<Place> place);
+    Step lirePlace(Place place);
 
-    Optional<Step> lireUn(Long id);
+    Step lireUn(Long id);
 
     Step modifier(Long id, Step step);
 

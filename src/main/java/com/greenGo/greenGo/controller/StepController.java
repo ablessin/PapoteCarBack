@@ -30,7 +30,7 @@ public class StepController {
     }
 
     @GetMapping("/read/{id}")
-    public Optional<Step> read(@PathVariable Long id) { return stepService.lireUn(id);}
+    public Step read(@PathVariable Long id) { return stepService.lireUn(id);}
 
     @GetMapping("read/bestSearch")
     public Map<Place, List<Step>> readGroupByPlace() {
@@ -41,8 +41,8 @@ public class StepController {
         return groups;
     }
     @GetMapping("/read/{placeId}")
-    public Optional<Step> readPlace(@PathVariable Long placeId) {
-        Optional<Place> place = placeService.lireUn(placeId);
+    public Step readPlace(@PathVariable Long placeId) {
+        Place place = placeService.lireUn(placeId);
         return stepService.lirePlace(place);
     }
     @PutMapping("/update/{id}")
