@@ -58,6 +58,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @PostMapping("/signin")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody User loginRequest) {
         log.warn(loginRequest.getUsername());
         Authentication authentication = authenticationManager.authenticate(
