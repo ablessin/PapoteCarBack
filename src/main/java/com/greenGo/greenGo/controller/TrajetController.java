@@ -2,6 +2,7 @@ package com.greenGo.greenGo.controller;
 
 import com.greenGo.greenGo.modele.*;
 import com.greenGo.greenGo.service.NotificationsService;
+import com.greenGo.greenGo.service.PlaceService;
 import com.greenGo.greenGo.service.TrajetService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,8 @@ import java.util.Set;
 public class TrajetController {
     private final TrajetService trajetService;
     private final NotificationsService notificationsService;
+    private final PlaceService placeService;
+
 
     @PostMapping("/create")
     public Trajet create(@RequestBody Trajet trajet) {
@@ -27,15 +30,39 @@ public class TrajetController {
     }
 
     @GetMapping("/read")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Trajet> read() {
         return trajetService.lire();
     }
 
     @GetMapping("/read/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Trajet read(@PathVariable Long id) {
          Trajet trajet = trajetService.lireUn(id);
          log.warn(trajet.toString());
         return trajet;
+    }
+
+    @GetMapping("/search/{champs}/{value}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Trajet> read2(@PathVariable String champs, @PathVariable String value) {
+
+        switch (champs) {
+            case "city":
+                trajetService.search(PlaceChamp.city, value);
+            case "adress":
+                trajetService.search(PlaceChamp.adress, value);
+            case "number":
+                trajetService.search(PlaceChamp.number, value);
+            case "region":
+                trajetService.search(PlaceChamp.region, value);
+            case "departement":
+                trajetService.search(PlaceChamp.departement, value);
+            default:
+                return trajetService.lire();
+        }
+
+//        return placeService.lire();
     }
 
     @PutMapping("/update/{id}")

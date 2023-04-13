@@ -20,7 +20,7 @@ public class Place {
     private String city;
     @Column(length = 150, nullable = false)
     private String adress;
-    @Column(length = 150, nullable = false)
+    @Column(length = 150)
     private String number;
     @Column(length = 150, nullable = false)
     private String departement;

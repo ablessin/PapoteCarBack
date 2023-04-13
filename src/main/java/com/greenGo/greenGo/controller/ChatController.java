@@ -33,8 +33,10 @@ public class ChatController {
     }
 
     @GetMapping("/read/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Chat read(@PathVariable Long id) { return chatService.lireUn(id);}
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/read/{trajetId}")
     public Chat readTrajet(@PathVariable Long trjetId) {
         Trajet trajet = trajetService.lireUn(trjetId);

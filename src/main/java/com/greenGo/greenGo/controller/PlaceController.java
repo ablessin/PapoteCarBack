@@ -22,28 +22,28 @@ public class PlaceController {
         return  placeService.creer(place);
     }
 
-    @GetMapping("/read/{champs}")
-    public List<Place> read(@PathVariable String champs) {
-    log.warn(champs.toString());
-//        switch (champs) {
-//            case city:
-//                    placeService.search(PlaceChamp.city, value);
-//            case adress:
-//                placeService.search(PlaceChamp.adress, value);
-//            case number:
-//                placeService.search(PlaceChamp.number, value);
-//            case region:
-//                placeService.search(PlaceChamp.region, value);
-//            case departement:
-//                placeService.search(PlaceChamp.departement, value);
-//            default:
-//                return placeService.lire();
-//        }
+    @GetMapping("/search/{champs}/{value}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Place> read2(@PathVariable String champs, @PathVariable String value) {
 
-        return placeService.lire();
+        switch (champs) {
+            case "city":
+                placeService.search(PlaceChamp.city, value);
+            case "adress":
+                placeService.search(PlaceChamp.adress, value);
+            case "number":
+                placeService.search(PlaceChamp.number, value);
+            case "region":
+                placeService.search(PlaceChamp.region, value);
+            case "departement":
+                placeService.search(PlaceChamp.departement, value);
+            default:
+                return placeService.lire();
+        }
     }
 
     @GetMapping("/read/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Place read(@PathVariable Long id) { return placeService.lireUn(id);}
 
     @PutMapping("/update/{id}")

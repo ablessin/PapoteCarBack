@@ -87,11 +87,13 @@ public class ObjectPassagerController {
     }
 
     @GetMapping("/read")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<ObjectPassager> read() {
         return objectPassagerService.lire();
     }
 
     @GetMapping("/read/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ObjectPassager read(@PathVariable Long id) {
         return objectPassagerService.lireUn(id);
     }

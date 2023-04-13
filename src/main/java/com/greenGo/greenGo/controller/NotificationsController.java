@@ -21,11 +21,13 @@ public class NotificationsController {
     }
 
     @GetMapping("/read")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Notifications> read() {
         return notificationsservice.lire();
     }
 
     @GetMapping("/read/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Notifications read(@PathVariable Long id) { return notificationsservice.lireUn(id);}
 
     @PutMapping("/update/{id}")
