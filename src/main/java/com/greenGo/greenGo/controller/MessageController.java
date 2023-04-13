@@ -52,11 +52,13 @@ public class MessageController {
     }
 
     @GetMapping("/read")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Message> read() {
         return messageService.lire();
     }
 
     @GetMapping("/read/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Message read(@PathVariable Long id) { return messageService.lireUn(id);}
 
     @PutMapping("/update/{id}")

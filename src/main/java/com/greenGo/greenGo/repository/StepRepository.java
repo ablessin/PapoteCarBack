@@ -9,6 +9,10 @@ import java.util.Optional;
 
 public interface StepRepository extends JpaRepository<Step, Long> {
     Step findStepByPlace(Place place);
-
+    Step findStepsByPlaceRegion(String region);
+    Step findStepsByPlaceDepartement(String department);
+    Step findStepsByPlaceAdress(String address);
+    Step findStepsByPlaceCity(String city);
+    Step findStepsByPlaceNumber(Integer number);
     Step findAllById(Long id);
 }

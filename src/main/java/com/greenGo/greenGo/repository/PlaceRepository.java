@@ -6,11 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
-    Optional<Place> findPlaceByAdress(String adress);
-    Optional<Place> findPlaceByNumber(int number);
-    Optional<Place> findPlaceByRegion(String region);
-    Optional<Place> findPlaceByDepartement(String departement);
-    Optional<Place> findPlaceByCity(String city);
+    Place findPlaceByAdress(String adress);
+    Place findPlaceByNumber(int number);
+    Place findPlaceByRegion(String region);
+    Place findPlaceByDepartement(String departement);
+    Place findPlaceByCity(String city);
 
     Place findAllById(Long id);
 }

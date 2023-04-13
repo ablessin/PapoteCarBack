@@ -25,14 +25,17 @@ public class StepController {
     }
 
     @GetMapping("/read")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Step> read() {
         return stepService.lire();
     }
 
     @GetMapping("/read/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Step read(@PathVariable Long id) { return stepService.lireUn(id);}
 
     @GetMapping("read/bestSearch")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Map<Place, List<Step>> readGroupByPlace() {
         List<Step> steps = stepService.lire();
         Map<Place, List<Step>> groups = steps.stream()
