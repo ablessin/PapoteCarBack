@@ -2,14 +2,15 @@ package com.greenGo.greenGo.controller;
 
 import com.greenGo.greenGo.modele.Place;
 import com.greenGo.greenGo.modele.Step;
+import com.greenGo.greenGo.modele.Trajet;
 import com.greenGo.greenGo.service.PlaceService;
 import com.greenGo.greenGo.service.StepService;
+import com.greenGo.greenGo.service.TrajetService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class StepController {
     private final StepService stepService;
     private final PlaceService placeService;
+    private final TrajetService trajetService;
 
     @PostMapping("/create")
     public Step create(@RequestBody Step step) {
@@ -28,6 +30,13 @@ public class StepController {
     @CrossOrigin(origins = "http://localhost:3000")
     public List<Step> read() {
         return stepService.lire();
+    }
+
+    @GetMapping("/read/trajet/{trajetId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Step> readByTrajet(@PathVariable Long trajetId) {
+        Trajet trajet = trajetService.lireUn(trajetId);
+        return stepService.lireByTrajet(trajet);
     }
 
     @GetMapping("/read/{id}")
@@ -44,7 +53,7 @@ public class StepController {
         return groups;
     }
     @GetMapping("/read/{placeId}")
-    public Step readPlace(@PathVariable Long placeId) {
+    public List<Step> readPlace(@PathVariable Long placeId) {
         Place place = placeService.lireUn(placeId);
         return stepService.lirePlace(place);
     }

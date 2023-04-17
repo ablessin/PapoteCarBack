@@ -40,9 +40,8 @@ public class User {
     private Set<ObjectPassager> objectPassager;
     @OneToMany(mappedBy = "user")
     private Set<Message> messages;
-//    @OneToMany(mappedBy = "driver")
-//    private Set<Trajet> trajets;
-//    private ImageIcon profilPicture;
+    @OneToMany(mappedBy = "driver")
+    private Set<Trajet> trajets;
     private Date createdAt;
     private Date updateAt;
 }

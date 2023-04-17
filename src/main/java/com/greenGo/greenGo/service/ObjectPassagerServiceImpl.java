@@ -1,17 +1,19 @@
 package com.greenGo.greenGo.service;
 
 import com.greenGo.greenGo.modele.ObjectPassager;
+import com.greenGo.greenGo.modele.Place;
+import com.greenGo.greenGo.modele.Trajet;
 import com.greenGo.greenGo.repository.ObjectPassagerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class ObjectPassagerServiceImpl implements ObjectPassagerService{
     private final ObjectPassagerRepository objectPassagerRepository;
+    private final TrajetService trajetService;
 
     @Override
     public ObjectPassager creer(ObjectPassager objectPassager) {
@@ -24,8 +26,24 @@ public class ObjectPassagerServiceImpl implements ObjectPassagerService{
     }
 
     @Override
+    public List<ObjectPassager> lireByTrajet(Long id) {
+        Trajet trajet = trajetService.lireUn(id);
+        return objectPassagerRepository.findAllByTrajet(trajet);
+    }
+
+    @Override
     public ObjectPassager lireUn(Long id) {
         return objectPassagerRepository.findAllById(id);
+    }
+
+    @Override
+    public int countStart(Place place, Trajet trajet) {
+        return objectPassagerRepository.countObjectPassagersByStartAndTrajetAndIsValided(place, trajet, true);
+    }
+
+    @Override
+    public int countEnd(Place place, Trajet trajet) {
+        return objectPassagerRepository.countObjectPassagersByStartAndTrajetAndIsValided(place, trajet, true);
     }
 
     @Override

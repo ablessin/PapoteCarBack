@@ -4,8 +4,6 @@ import com.greenGo.greenGo.modele.Chat;
 import com.greenGo.greenGo.modele.Trajet;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
 public interface ChatRepository extends JpaRepository<Chat, Long> {
     Chat findChatByTrajet(Trajet trajet);
 

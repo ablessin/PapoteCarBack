@@ -1,19 +1,20 @@
 package com.greenGo.greenGo.controller;
 
-import com.greenGo.greenGo.modele.Message;
 import com.greenGo.greenGo.modele.Notifications;
+import com.greenGo.greenGo.modele.User;
 import com.greenGo.greenGo.service.NotificationsService;
+import com.greenGo.greenGo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/notifications")
 @AllArgsConstructor
 public class NotificationsController {
     private final NotificationsService notificationsservice;
+    private final UserService userService;
 
     @PostMapping("/create")
     public Notifications create(@RequestBody Notifications notification) {
@@ -24,6 +25,13 @@ public class NotificationsController {
     @CrossOrigin(origins = "http://localhost:3000")
     public List<Notifications> read() {
         return notificationsservice.lire();
+    }
+
+    @GetMapping("/read/user/{userId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Notifications> readByUser(@PathVariable Long userId) {
+        User user = userService.lireUn(userId);
+        return notificationsservice.lireByUser(user);
     }
 
     @GetMapping("/read/{id}")

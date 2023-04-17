@@ -2,12 +2,12 @@ package com.greenGo.greenGo.service;
 
 import com.greenGo.greenGo.modele.Place;
 import com.greenGo.greenGo.modele.Step;
+import com.greenGo.greenGo.modele.Trajet;
 import com.greenGo.greenGo.repository.StepRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -25,12 +25,17 @@ public class StepServiceImpl implements StepService{
     }
 
     @Override
+    public List<Step> lireByTrajet(Trajet trajet) {
+        return stepRepository.findAllByTrajet(trajet);
+    }
+
+    @Override
     public Step lireUn(Long id) {
         return stepRepository.findAllById(id);
     }
 
     @Override
-    public Step lirePlace(Place place) { return stepRepository.findStepByPlace(place);}
+    public List<Step> lirePlace(Place place) { return stepRepository.findStepByPlace(place);}
 
     @Override
     public Step modifier(Long id, Step step) {

@@ -3,12 +3,10 @@ package com.greenGo.greenGo.service;
 import com.greenGo.greenGo.modele.Chat;
 import com.greenGo.greenGo.modele.Trajet;
 import com.greenGo.greenGo.repository.ChatRepository;
-import com.greenGo.greenGo.repository.TrajetRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
