@@ -2,8 +2,8 @@ package com.greenGo.greenGo.controller;
 
 import com.greenGo.greenGo.modele.*;
 import com.greenGo.greenGo.service.NotificationsService;
-import com.greenGo.greenGo.service.PlaceService;
 import com.greenGo.greenGo.service.TrajetService;
+import com.greenGo.greenGo.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -21,7 +20,7 @@ import java.util.Set;
 public class TrajetController {
     private final TrajetService trajetService;
     private final NotificationsService notificationsService;
-    private final PlaceService placeService;
+    private final UserService userService;
 
 
     @PostMapping("/create")
@@ -33,6 +32,13 @@ public class TrajetController {
     @CrossOrigin(origins = "http://localhost:3000")
     public List<Trajet> read() {
         return trajetService.lire();
+    }
+
+    @GetMapping("/read/user/{userId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Trajet> readByUser(@PathVariable Long userId) {
+        User user = userService.lireUn(userId);
+        return trajetService.lireByUser(user);
     }
 
     @GetMapping("/read/{id}")
@@ -62,7 +68,6 @@ public class TrajetController {
                 return trajetService.lire();
         }
 
-//        return placeService.lire();
     }
 
     @PutMapping("/update/{id}")

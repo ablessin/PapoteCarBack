@@ -33,13 +33,13 @@ public class UserController {
         return userService.lireUn(id);
     }
 
-    @GetMapping("/read/{email}")
+    @GetMapping("/read/email/{email}")
     @CrossOrigin(origins = "http://localhost:3000")
     public Optional<User> findByEmail(@PathVariable  String email) {
         return userService.findByEmail(email);
     }
 
-    @GetMapping("/read/{username}")
+    @GetMapping("/read/username/{username}")
     @CrossOrigin(origins = "http://localhost:3000")
     public Optional<User> findByUsername(@PathVariable String username) {
         return userService.findByUsername(username);

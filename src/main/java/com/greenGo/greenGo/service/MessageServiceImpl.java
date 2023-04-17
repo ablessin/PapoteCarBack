@@ -1,12 +1,12 @@
 package com.greenGo.greenGo.service;
 
+import com.greenGo.greenGo.modele.Chat;
 import com.greenGo.greenGo.modele.Message;
 import com.greenGo.greenGo.repository.MessageRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -26,6 +26,11 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Message lireUn(Long id) {
         return messageRepository.findAllById(id);
+    }
+
+    @Override
+    public List<Message> lireByChat(Chat chat) {
+        return messageRepository.findAllByChat(chat);
     }
 
     @Override

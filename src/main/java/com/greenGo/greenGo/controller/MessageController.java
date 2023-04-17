@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -60,6 +59,13 @@ public class MessageController {
     @GetMapping("/read/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
     public Message read(@PathVariable Long id) { return messageService.lireUn(id);}
+
+    @GetMapping("/read/chat/{chatId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Message> readByChat(@PathVariable Long chatId) {
+        Chat chat = chatService.lireUn(chatId);
+        return messageService.lireByChat(chat);
+    }
 
     @PutMapping("/update/{id}")
     public Message update(@PathVariable Long id, @RequestBody Message message) {

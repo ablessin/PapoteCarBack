@@ -62,6 +62,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/trajet/read").permitAll()
+                .requestMatchers("/trajet/search/*").permitAll()
 //                .antMatchers("/api/test/**").permitAll()
                 .anyRequest()
                 .authenticated()

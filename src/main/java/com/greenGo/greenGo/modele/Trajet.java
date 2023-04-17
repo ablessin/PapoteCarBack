@@ -1,14 +1,12 @@
 package com.greenGo.greenGo.modele;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -26,7 +24,7 @@ public class Trajet {
     @Column(length = 50)
     private String name;
     @ManyToOne
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name="driver", nullable=false)
     private User driver;
     @OneToMany(mappedBy = "trajet")

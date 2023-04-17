@@ -4,7 +4,6 @@ import com.greenGo.greenGo.modele.Place;
 import com.greenGo.greenGo.modele.PlaceChamp;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PlaceService {
     Place creer(Place place);

@@ -5,13 +5,14 @@ import com.greenGo.greenGo.service.ChatService;
 import com.greenGo.greenGo.service.NotificationsService;
 import com.greenGo.greenGo.service.TrajetService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/chat")
 @AllArgsConstructor
@@ -21,23 +22,24 @@ public class ChatController {
     private final TrajetService trajetService;
 
     @PostMapping("/create")
-   // @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Chat create(@RequestBody Chat chat) {
         return  chatService.creer(chat);
     }
 
     @GetMapping("/read")
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
     public List<Chat> read() {
         return chatService.lire();
     }
 
     @GetMapping("/read/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public Chat read(@PathVariable Long id) { return chatService.lireUn(id);}
+    public Chat read(@PathVariable Long id) {
+        return chatService.lireUn(id);
+    }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/read/{trajetId}")
+    @GetMapping("/read/trajet/{trajetId}")
     public Chat readTrajet(@PathVariable Long trjetId) {
         Trajet trajet = trajetService.lireUn(trjetId);
         return chatService.lireByTrajet(trajet);

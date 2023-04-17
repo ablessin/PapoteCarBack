@@ -1,9 +1,9 @@
 package com.greenGo.greenGo.modele;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -24,6 +24,7 @@ public class Notifications {
     @Column(nullable = false)
     private LocalDate date;
     @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name="user_id", nullable=false)
     private User user;
     @Column(nullable = false)

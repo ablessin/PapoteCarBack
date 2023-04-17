@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -25,60 +24,39 @@ public class ObjectPassagerController {
 
     @PostMapping("/create")
     public ObjectPassager create(@RequestBody ObjectPassager objectPassager) {
-        log.warn(objectPassager.getTrajet().getId().toString());
         Trajet trajet = trajetService.lireUn(objectPassager.getTrajet().getId());
-        log.warn(trajet.toString());
         Boolean canCreate = verifNbPlace(trajet, objectPassager);
-//
-//        Set<ObjectPassager> userList = trajet.getPassagers();
-//        List<Notifications> list = new ArrayList<>();
 
         if (canCreate) {
-//            for (ObjectPassager user: userList) {
-//                Notifications notifications = new Notifications();
-//
-//                notifications.setActionType(ActionType.newUserTrajet.toString());
-//                notifications.setMessage("Un nouveau passager voudrait s'ajoutter à votre trajet " +
-//                        trajet.getName());
-//                notifications.setActivate(true);
-//                LocalDate date = LocalDate.now();
-//                notifications.setDate(date);
-//                notifications.setCreatedAt(date);
-//                notifications.setUpdateAt(date);
-//                notifications.setUser(user.getUser());
-//
-//                list.add(notifications);
-//            }
-//
-//            for (Notifications notifications: list) {
-//                notificationsService.creer(notifications);
-//            }
-
             return objectPassagerService.creer(objectPassager);
         }
         return null;
     }
 
-    @PostMapping("/accepted/{id}")
-    public ObjectPassager accepted(@PathVariable Long id, @RequestBody ObjectPassager objectPassager) {
+    @PutMapping("/accepted/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ObjectPassager accepted(@PathVariable Long id) {
+        ObjectPassager objectPassager = objectPassagerService.lireUn(id);
 
         List<Notifications> list = new ArrayList<>();
         Trajet trajet = objectPassager.getTrajet();
         Set<ObjectPassager> objectPassagers = trajet.getPassagers();
 
         for (ObjectPassager user: objectPassagers) {
-            Notifications notifications = new Notifications();
-            notifications.setActionType(ActionType.validUserTrajet.toString());
-            notifications.setMessage("Un nouveau passager a été ajouté au trajet " +
-                    trajet.getName());
-            notifications.setActivate(true);
-            LocalDate date = LocalDate.now();
-            notifications.setDate(date);
-            notifications.setCreatedAt(date);
-            notifications.setUpdateAt(date);
-            notifications.setUser(user.getUser());
+            if (user.getIsValided()) {
+                Notifications notifications = new Notifications();
+                notifications.setActionType(ActionType.validUserTrajet.toString());
+                notifications.setMessage("Un nouveau passager a été ajouté au trajet " +
+                        trajet.getName());
+                notifications.setActivate(true);
+                LocalDate date = LocalDate.now();
+                notifications.setDate(date);
+                notifications.setCreatedAt(date);
+                notifications.setUpdateAt(date);
+                notifications.setUser(user.getUser());
 
-            list.add(notifications);
+                list.add(notifications);
+            }
         }
 
         list.stream().map(item -> notificationsService.creer(item));
@@ -90,6 +68,12 @@ public class ObjectPassagerController {
     @CrossOrigin(origins = "http://localhost:3000")
     public List<ObjectPassager> read() {
         return objectPassagerService.lire();
+    }
+
+    @GetMapping("/read/trajet/{trajetId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<ObjectPassager> readByTrajet(@PathVariable Long trajetId) {
+        return objectPassagerService.lireByTrajet(trajetId);
     }
 
     @GetMapping("/read/{id}")
@@ -134,49 +118,18 @@ public class ObjectPassagerController {
     }
 
     public Boolean verifNbPlace(Trajet trajet, ObjectPassager newPassager) {
-        List<Step> stepsList = trajet.getSteps().stream().toList();
-        List<ObjectPassager> passager = trajet.getPassagers().stream().toList();
+        Place start = newPassager.getStart();
+        Place end = newPassager.getEnd();
 
-        List<ObjectPlace> objectPlaces = new ArrayList();
+        int nbPlace = trajet.getPlaceMax();
 
-        stepsList.stream().map(item -> {
-            ObjectPlace object = new ObjectPlace();
-            object.setPosition(item.getPosition());
-            object.setNbPlace(0);
+        int countStart = objectPassagerService.countStart(start, trajet);
+        int countEnd = objectPassagerService.countEnd(end, trajet);
 
-            return objectPlaces.add(object);
-        });
-
-        for (ObjectPassager item: passager) {
-            Long startPlaceId = item.getStart().getId();
-            Long endPlaceId = item.getEnd().getId();
-
-            int positionStart = stepsList.stream().filter(x -> x.getPlace().getId().equals(startPlaceId)).findFirst().get().getPosition();
-            int positionEnd = stepsList.stream().filter(x -> x.getPlace().getId().equals(endPlaceId)).findFirst().get().getPosition();
-
-            addPersonne(positionStart, positionEnd, objectPlaces, trajet);
-//            objectPlaces.clear();
-//            places.stream().map(y -> objectPlaces.add(y));
+        if (countStart < nbPlace && countEnd < nbPlace) {
+            return true;
+        } else {
+            return false;
         }
-
-         int start = stepsList.stream().filter(item -> item.getPlace().equals(newPassager.getStart())).findFirst().get().getPosition();
-         int end = stepsList.stream().filter(item -> item.getPlace().equals(newPassager.getStart())).findFirst().get().getPosition();
-
-        return addPersonne(start, end, objectPlaces, trajet);
-    }
-
-    public Boolean addPersonne(int start, int end, List<ObjectPlace> objectPlaces, Trajet trajet) {
-        for (int i = start; i < end; i++) {
-            ObjectPlace objectPlace = objectPlaces.stream().filter(y -> y.getPosition().equals(i)).findFirst().get();
-            Integer nbPlace = objectPlace.getNbPlace();
-
-            if (nbPlace < trajet.getPlaceMax()) {
-                objectPlace.setNbPlace(objectPlace.getNbPlace() + 1);
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return null;
     }
 }

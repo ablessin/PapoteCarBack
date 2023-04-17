@@ -1,9 +1,7 @@
 package com.greenGo.greenGo.controller;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.greenGo.greenGo.modele.ERole;
 import com.greenGo.greenGo.modele.Role;
@@ -12,7 +10,6 @@ import com.greenGo.greenGo.repository.RoleRepository;
 import com.greenGo.greenGo.repository.UserRepository;
 import com.greenGo.greenGo.security.jwt.JwtUtils;
 import com.greenGo.greenGo.security.response.JwtResponse;
-import com.greenGo.greenGo.security.services.UserDetailsImpl;
 import com.greenGo.greenGo.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

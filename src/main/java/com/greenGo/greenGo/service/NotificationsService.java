@@ -1,17 +1,17 @@
 package com.greenGo.greenGo.service;
 
-import com.greenGo.greenGo.modele.Chat;
 import com.greenGo.greenGo.modele.Notifications;
-import com.greenGo.greenGo.modele.ObjectPassager;
+import com.greenGo.greenGo.modele.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface NotificationsService {
 
     Notifications creer(Notifications notification);
 
     List<Notifications> lire();
+
+    List<Notifications> lireByUser(User user);
 
     Notifications lireUn(Long id);
 

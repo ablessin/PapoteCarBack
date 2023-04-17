@@ -1,13 +1,12 @@
 package com.greenGo.greenGo.service;
 
-import com.greenGo.greenGo.modele.Message;
 import com.greenGo.greenGo.modele.Notifications;
+import com.greenGo.greenGo.modele.User;
 import com.greenGo.greenGo.repository.NotificationsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,6 +21,11 @@ public class NotificationsImpl implements NotificationsService{
     @Override
     public List<Notifications> lire() {
         return notificationsRepository.findAll();
+    }
+
+    @Override
+    public List<Notifications> lireByUser(User user) {
+        return notificationsRepository.findAllByUser(user);
     }
 
     @Override
