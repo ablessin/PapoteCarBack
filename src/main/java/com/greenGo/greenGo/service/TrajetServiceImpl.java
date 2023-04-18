@@ -62,7 +62,8 @@ public class TrajetServiceImpl implements TrajetService{
                 .map(p-> {
                     p.setName(trajet.getName());
                     p.setDriver(trajet.getDriver());
-                    p.setPassagers(trajet.getPassagers());
+                    p.setStartDateTime(trajet.getStartDateTime());
+                    p.setEndPrevisionalDateTime(trajet.getEndPrevisionalDateTime());
                     p.setPlaceMax(trajet.getPlaceMax());
                     return trajetRepository.save(p);
                 }).orElseThrow(() -> new RuntimeException("Trajet non trouvé"));

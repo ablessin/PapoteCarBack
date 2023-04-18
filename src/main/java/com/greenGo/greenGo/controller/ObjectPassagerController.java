@@ -59,7 +59,9 @@ public class ObjectPassagerController {
             }
         }
 
-        list.stream().map(item -> notificationsService.creer(item));
+        for (Notifications notifications: list) {
+            notificationsService.creer(notifications);
+        }
 
         return  objectPassagerService.accepted(id);
     }
@@ -112,7 +114,9 @@ public class ObjectPassagerController {
             list.add(notifications);
         }
 
-        list.stream().map(item -> notificationsService.creer(item));
+        for (Notifications notifications: list) {
+            notificationsService.creer(notifications);
+        }
 
         return  objectPassagerService.supprimer(id);
     }

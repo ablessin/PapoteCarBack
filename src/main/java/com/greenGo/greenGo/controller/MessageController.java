@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -74,9 +75,15 @@ public class MessageController {
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        Message message = messageService.lireUn(id);
         List<Notifications> list = new ArrayList<>();
-        message.getChat().getTrajet().getPassagers().stream().map(item -> {
+
+        Message message = messageService.lireUn(id);
+        Chat chat = message.getChat();
+        Trajet trajet = chat.getTrajet();
+
+        Set<ObjectPassager> userList = trajet.getPassagers();
+
+        for (ObjectPassager objectPassager: userList) {
             Notifications notifications = new Notifications();
             notifications.setActionType(ActionType.supMessage.toString());
             notifications.setMessage("Le message du trajet " + message.getChat().getTrajet().getName() + " a été supprimé");
@@ -85,11 +92,14 @@ public class MessageController {
             notifications.setDate(date);
             notifications.setCreatedAt(date);
             notifications.setUpdateAt(date);
-            notifications.setUser(item.getUser());
+            notifications.setUser(objectPassager.getUser());
 
-            return list.add(notifications);
-        });
-        list.stream().map(item -> notificationsService.creer(item));
+            list.add(notifications);
+        }
+
+        for (Notifications notifications: list) {
+            notificationsService.creer(notifications);
+        }
 
         return  messageService.supprimer(id);
     }
