@@ -8,10 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -33,6 +37,25 @@ public class TrajetController {
     @CrossOrigin(origins = "http://localhost:3000")
     public List<Trajet> read() {
         return trajetService.lire();
+    }
+
+    @PostMapping("/read/isPossible/user/{userId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Boolean read(@RequestBody Trajet trajet, @PathVariable Long userId) {
+        User user = userService.lireUn(userId);
+        for (Trajet entry: user.getTrajets()) {
+            Long hours = getDHoursBetween(entry.getStartDateTime(), entry.getEndPrevisionalDateTime());
+            LocalDateTime startDate = entry.getStartDateTime();
+            for (int i = 0; i < hours; i++) {
+                startDate = startDate.plusHours(1);
+                if (startDate.getHour() == trajet.getStartDateTime().getHour()) {
+                    return false;
+                } else if (startDate.getHour() == trajet.getEndPrevisionalDateTime().getHour()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @GetMapping("/read/user/{userId}")
@@ -105,5 +128,10 @@ public class TrajetController {
         }
 
         return  trajetService.supprimer(id);
+    }
+
+    public static long getDHoursBetween(LocalDateTime startDate, LocalDateTime endDate) {
+        long hours = ( endDate.getHour() - startDate.getHour());
+        return hours;
     }
 }
