@@ -8,4 +8,5 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     Chat findChatByTrajet(Trajet trajet);
 
     Chat findAllById(Long id);
+
 }

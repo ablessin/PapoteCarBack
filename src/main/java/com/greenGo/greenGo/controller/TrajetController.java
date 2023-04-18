@@ -97,7 +97,9 @@ public class TrajetController {
             list.add(notifications);
         }
 
-        list.stream().map(item -> notificationsService.creer(item));
+        for (Notifications notifications: list) {
+            notificationsService.creer(notifications);
+        }
 
         return  trajetService.supprimer(id);
     }

@@ -18,4 +18,5 @@ public interface StepRepository extends JpaRepository<Step, Long> {
     Step findAllById(Long id);
 
     List<Step> findAllByTrajet(Trajet trajet);
+
 }

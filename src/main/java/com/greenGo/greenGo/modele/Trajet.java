@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -21,8 +22,14 @@ public class Trajet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 50)
+    @Column(length = 50, nullable=false)
     private String name;
+
+    @Column(nullable=false)
+    private LocalDateTime startDateTime;
+
+    @Column(nullable=false)
+    private LocalDate endPrevisionalDateTime;
     @ManyToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name="driver", nullable=false)

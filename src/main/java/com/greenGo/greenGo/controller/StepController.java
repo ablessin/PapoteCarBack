@@ -1,5 +1,6 @@
 package com.greenGo.greenGo.controller;
 
+import com.greenGo.greenGo.modele.Chat;
 import com.greenGo.greenGo.modele.Place;
 import com.greenGo.greenGo.modele.Step;
 import com.greenGo.greenGo.modele.Trajet;
@@ -9,6 +10,7 @@ import com.greenGo.greenGo.service.TrajetService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,12 +47,20 @@ public class StepController {
 
     @GetMapping("read/bestSearch")
     @CrossOrigin(origins = "http://localhost:3000")
-    public Map<Place, List<Step>> readGroupByPlace() {
+    public List<Step> readGroupByPlace() {
+        List<Step> stepList = new ArrayList<>();
         List<Step> steps = stepService.lire();
+
         Map<Place, List<Step>> groups = steps.stream()
                 .collect(Collectors.groupingBy(Step::getPlace));
 
-        return groups;
+        for (Map.Entry<Place, List<Step>> entry: groups.entrySet()) {
+            for (Step value: entry.getValue()) {
+                Step step = stepService.lireUn(value.getId());
+                stepList.add(step);
+            }
+        }
+        return stepList;
     }
     @GetMapping("/read/{placeId}")
     public List<Step> readPlace(@PathVariable Long placeId) {
