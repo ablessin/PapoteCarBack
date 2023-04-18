@@ -24,6 +24,7 @@ public class TrajetController {
 
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Trajet create(@RequestBody Trajet trajet) {
         return  trajetService.creer(trajet);
     }
@@ -71,11 +72,13 @@ public class TrajetController {
     }
 
     @PutMapping("/update/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Trajet update(@PathVariable Long id, @RequestBody Trajet trajet) {
         return trajetService.modifier(id, trajet);
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public String delete(@PathVariable Long id) {
         List<Notifications> list = new ArrayList<>();
 

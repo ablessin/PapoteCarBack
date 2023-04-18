@@ -24,6 +24,7 @@ public class StepController {
     private final TrajetService trajetService;
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Step create(@RequestBody Step step) {
         return  stepService.creer(step);
     }
@@ -63,16 +64,19 @@ public class StepController {
         return stepList;
     }
     @GetMapping("/read/{placeId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Step> readPlace(@PathVariable Long placeId) {
         Place place = placeService.lireUn(placeId);
         return stepService.lirePlace(place);
     }
     @PutMapping("/update/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Step update(@PathVariable Long id, @RequestBody Step step) {
         return stepService.modifier(id, step);
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public String delete(@PathVariable Long id) {
         return  stepService.supprimer(id);
     }

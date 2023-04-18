@@ -23,6 +23,7 @@ public class MessageController {
     private final UserService userService;
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Message create(@RequestBody Message message) {
 
         List<Notifications> list = new ArrayList<>();
@@ -69,11 +70,13 @@ public class MessageController {
     }
 
     @PutMapping("/update/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Message update(@PathVariable Long id, @RequestBody Message message) {
         return messageService.modifier(id, message);
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public String delete(@PathVariable Long id) {
         List<Notifications> list = new ArrayList<>();
 

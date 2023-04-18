@@ -17,6 +17,7 @@ public class NotificationsController {
     private final UserService userService;
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Notifications create(@RequestBody Notifications notification) {
         return  notificationsservice.creer(notification);
     }
@@ -39,10 +40,9 @@ public class NotificationsController {
     public Notifications read(@PathVariable Long id) { return notificationsservice.lireUn(id);}
 
     @PutMapping("/update/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Notifications update(@PathVariable Long id, @RequestBody Notifications notifications) {
         return notificationsservice.modifier(id, notifications );
     }
-
-
 
 }

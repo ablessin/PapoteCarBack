@@ -24,11 +24,13 @@ public class ChatController {
     private final UserService userService;
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Chat create(@RequestBody Chat chat) {
         return  chatService.creer(chat);
     }
 
     @GetMapping("/read")
+    @CrossOrigin(origins = "http://localhost:3000")
 //    @PreAuthorize("hasRole('USER')")
     public List<Chat> read() {
         return chatService.lire();
@@ -70,11 +72,13 @@ public class ChatController {
     }
 
     @PutMapping("/update/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Chat update(@PathVariable Long id, @RequestBody Chat chat) {
         return chatService.modifier(id, chat);
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public String delete(@PathVariable Long id) {
         List<Notifications> list = new ArrayList<>();
         Chat chat = chatService.lireUn(id);

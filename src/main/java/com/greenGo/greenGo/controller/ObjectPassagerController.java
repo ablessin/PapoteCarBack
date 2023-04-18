@@ -23,6 +23,7 @@ public class ObjectPassagerController {
     private final TrajetService trajetService;
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ObjectPassager create(@RequestBody ObjectPassager objectPassager) {
         Trajet trajet = trajetService.lireUn(objectPassager.getTrajet().getId());
         Boolean canCreate = verifNbPlace(trajet, objectPassager);
@@ -85,11 +86,13 @@ public class ObjectPassagerController {
     }
 
     @PutMapping("/update/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ObjectPassager update(@PathVariable Long id, @RequestBody ObjectPassager objectPassager) {
         return objectPassagerService.modifier(id, objectPassager);
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public String delete(@PathVariable Long id) {
         List<Notifications> list = new ArrayList<>();
 

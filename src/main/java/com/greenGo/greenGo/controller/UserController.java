@@ -17,6 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "http://localhost:3000")
     public User create(@RequestBody User user) {
         return  userService.creer(user);
     }
@@ -46,11 +47,13 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public User update(@PathVariable Long id, @RequestBody User user) {
         return userService.modifier(id, user);
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public String delete(@PathVariable Long id) {
         return  userService.supprimer(id);
     }

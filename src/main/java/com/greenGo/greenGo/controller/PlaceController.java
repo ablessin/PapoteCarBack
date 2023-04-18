@@ -17,6 +17,7 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Place create(@RequestBody Place place) {
         return  placeService.creer(place);
     }
@@ -46,11 +47,13 @@ public class PlaceController {
     public Place read(@PathVariable Long id) { return placeService.lireUn(id);}
 
     @PutMapping("/update/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Place update(@PathVariable Long id, @RequestBody Place place) {
         return placeService.modifier(id, place);
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public String delete(@PathVariable Long id) {
         return placeService.supprimer(id);
     }
