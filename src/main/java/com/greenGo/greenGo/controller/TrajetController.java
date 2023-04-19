@@ -40,7 +40,7 @@ public class TrajetController {
 
     @PostMapping("/read/isPossible/user/{userId}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public Boolean read(@RequestBody Trajet trajet, @PathVariable Long userId) {
+    public Boolean readPossibility(@RequestBody Trajet trajet, @PathVariable Long userId) {
         User user = userService.lireUn(userId);
         if (user.getTrajets().size() > 0) {
             for (Trajet entry: user.getTrajets()) {
