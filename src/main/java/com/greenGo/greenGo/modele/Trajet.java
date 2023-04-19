@@ -29,7 +29,7 @@ public class Trajet {
     private LocalDateTime startDateTime;
 
     @Column(nullable=false)
-    private LocalDate endPrevisionalDateTime;
+    private LocalDateTime endPrevisionalDateTime;
     @ManyToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name="driver", nullable=false)

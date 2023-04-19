@@ -1,5 +1,6 @@
 package com.greenGo.greenGo.service;
 
+import com.greenGo.greenGo.modele.ObjectPassager;
 import com.greenGo.greenGo.modele.PlaceChamp;
 import com.greenGo.greenGo.modele.Trajet;
 import com.greenGo.greenGo.modele.User;

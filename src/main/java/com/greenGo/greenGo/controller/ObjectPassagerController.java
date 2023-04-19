@@ -25,13 +25,19 @@ public class ObjectPassagerController {
     @PostMapping("/create")
     @CrossOrigin(origins = "http://localhost:3000")
     public ObjectPassager create(@RequestBody ObjectPassager objectPassager) {
-        Trajet trajet = trajetService.lireUn(objectPassager.getTrajet().getId());
-        Boolean canCreate = verifNbPlace(trajet, objectPassager);
+        return objectPassagerService.creer(objectPassager);
+    }
 
-        if (canCreate) {
-            return objectPassagerService.creer(objectPassager);
+    @PostMapping("/canPassager")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Boolean canPassager(@RequestBody ObjectPassager objectPassager) {
+        Trajet trajet = trajetService.lireUn(objectPassager.getTrajet().getId());
+        Boolean aBoolean = verifNbPlace(trajet, objectPassager);
+
+        if (aBoolean) {
+            return true;
         }
-        return null;
+        return false;
     }
 
     @PutMapping("/accepted/{id}")

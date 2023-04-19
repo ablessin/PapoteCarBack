@@ -2,11 +2,15 @@ package com.greenGo.greenGo.controller;
 
 import com.greenGo.greenGo.modele.*;
 import com.greenGo.greenGo.service.NotificationsService;
+import com.greenGo.greenGo.service.ObjectPassagerService;
 import com.greenGo.greenGo.service.TrajetService;
 import com.greenGo.greenGo.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +25,7 @@ public class TrajetController {
     private final TrajetService trajetService;
     private final NotificationsService notificationsService;
     private final UserService userService;
-
+    private final ObjectPassagerService objectPassagerService;
 
     @PostMapping("/create")
     @CrossOrigin(origins = "http://localhost:3000")
@@ -33,6 +37,44 @@ public class TrajetController {
     @CrossOrigin(origins = "http://localhost:3000")
     public List<Trajet> read() {
         return trajetService.lire();
+    }
+
+    @PostMapping("/read/isPossible/user/{userId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Boolean read(@RequestBody Trajet trajet, @PathVariable Long userId) {
+        User user = userService.lireUn(userId);
+        for (Trajet entry: user.getTrajets()) {
+            Long hours = getDHoursBetween(entry.getStartDateTime(), entry.getEndPrevisionalDateTime());
+
+            for (int i = 0; i <= hours; i++) {
+                LocalDateTime startDate = entry.getStartDateTime().minusHours(2);
+                startDate = startDate.plusHours(i);
+                if (startDate.getHour() == trajet.getStartDateTime().getHour()) {
+                    return false;
+                } else if (startDate.getHour() == trajet.getEndPrevisionalDateTime().getHour()) {
+                    return false;
+                }
+            }
+        }
+        List<ObjectPassager> objectPassagers = objectPassagerService.lireByUser(user);
+
+        for (ObjectPassager objectPassager: objectPassagers) {
+           Trajet trajet1 = objectPassager.getTrajet();
+
+           Long hours = getDHoursBetween(trajet1.getStartDateTime(), trajet1.getEndPrevisionalDateTime());
+
+           for (int i = 0; i <= hours; i++) {
+               LocalDateTime startDate = trajet1.getStartDateTime().minusHours(2);
+               startDate = startDate.plusHours(i);
+               if (startDate.getHour() == trajet.getStartDateTime().getHour()) {
+                   return false;
+               }
+               if (startDate.getHour() == trajet.getEndPrevisionalDateTime().getHour()) {
+                   return false;
+               }
+           }
+        }
+        return true;
     }
 
     @GetMapping("/read/user/{userId}")
@@ -105,5 +147,10 @@ public class TrajetController {
         }
 
         return  trajetService.supprimer(id);
+    }
+
+    public static long getDHoursBetween(LocalDateTime startDate, LocalDateTime endDate) {
+        long hours = ( endDate.getHour() - startDate.getHour());
+        return hours;
     }
 }
