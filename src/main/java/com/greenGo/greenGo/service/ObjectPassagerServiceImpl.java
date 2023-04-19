@@ -3,6 +3,7 @@ package com.greenGo.greenGo.service;
 import com.greenGo.greenGo.modele.ObjectPassager;
 import com.greenGo.greenGo.modele.Place;
 import com.greenGo.greenGo.modele.Trajet;
+import com.greenGo.greenGo.modele.User;
 import com.greenGo.greenGo.repository.ObjectPassagerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,11 @@ public class ObjectPassagerServiceImpl implements ObjectPassagerService{
     @Override
     public List<ObjectPassager> lire() {
         return objectPassagerRepository.findAll();
+    }
+
+    @Override
+    public List<ObjectPassager> lireByUser(User user) {
+        return objectPassagerRepository.findAllByUser(user);
     }
 
     @Override
