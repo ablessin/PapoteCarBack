@@ -1,6 +1,5 @@
 package com.greenGo.greenGo.repository;
 
-import com.greenGo.greenGo.modele.ObjectPassager;
 import com.greenGo.greenGo.modele.Trajet;
 import com.greenGo.greenGo.modele.User;
 import org.springframework.data.jpa.repository.JpaRepository;

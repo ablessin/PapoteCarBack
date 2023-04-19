@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -43,36 +42,40 @@ public class TrajetController {
     @CrossOrigin(origins = "http://localhost:3000")
     public Boolean read(@RequestBody Trajet trajet, @PathVariable Long userId) {
         User user = userService.lireUn(userId);
-        for (Trajet entry: user.getTrajets()) {
-            Long hours = getDHoursBetween(entry.getStartDateTime(), entry.getEndPrevisionalDateTime());
+        if (user.getTrajets().size() > 0) {
+            for (Trajet entry: user.getTrajets()) {
+                Long hours = getDHoursBetween(entry.getStartDateTime(), entry.getEndPrevisionalDateTime());
 
-            for (int i = 0; i <= hours; i++) {
-                LocalDateTime startDate = entry.getStartDateTime().minusHours(2);
-                startDate = startDate.plusHours(i);
-                if (startDate.getHour() == trajet.getStartDateTime().getHour()) {
-                    return false;
-                } else if (startDate.getHour() == trajet.getEndPrevisionalDateTime().getHour()) {
-                    return false;
+                for (int i = 0; i <= hours; i++) {
+                    LocalDateTime startDate = entry.getStartDateTime().minusHours(2);
+                    startDate = startDate.plusHours(i);
+                    if (startDate.getHour() == trajet.getStartDateTime().getHour()) {
+                        return false;
+                    } else if (startDate.getHour() == trajet.getEndPrevisionalDateTime().getHour()) {
+                        return false;
+                    }
                 }
             }
         }
         List<ObjectPassager> objectPassagers = objectPassagerService.lireByUser(user);
 
-        for (ObjectPassager objectPassager: objectPassagers) {
-           Trajet trajet1 = objectPassager.getTrajet();
+        if (objectPassagers.size() > 0) {
+            for (ObjectPassager objectPassager: objectPassagers) {
+                Trajet trajet1 = objectPassager.getTrajet();
 
-           Long hours = getDHoursBetween(trajet1.getStartDateTime(), trajet1.getEndPrevisionalDateTime());
+                Long hours = getDHoursBetween(trajet1.getStartDateTime(), trajet1.getEndPrevisionalDateTime());
 
-           for (int i = 0; i <= hours; i++) {
-               LocalDateTime startDate = trajet1.getStartDateTime().minusHours(2);
-               startDate = startDate.plusHours(i);
-               if (startDate.getHour() == trajet.getStartDateTime().getHour()) {
-                   return false;
-               }
-               if (startDate.getHour() == trajet.getEndPrevisionalDateTime().getHour()) {
-                   return false;
-               }
-           }
+                for (int i = 0; i <= hours; i++) {
+                    LocalDateTime startDate = trajet1.getStartDateTime().minusHours(2);
+                    startDate = startDate.plusHours(i);
+                    if (startDate.getHour() == trajet.getStartDateTime().getHour()) {
+                        return false;
+                    }
+                    if (startDate.getHour() == trajet.getEndPrevisionalDateTime().getHour()) {
+                        return false;
+                    }
+                }
+            }
         }
         return true;
     }
@@ -150,7 +153,6 @@ public class TrajetController {
     }
 
     public static long getDHoursBetween(LocalDateTime startDate, LocalDateTime endDate) {
-        long hours = ( endDate.getHour() - startDate.getHour());
-        return hours;
+        return (endDate.getHour() - startDate.getHour());
     }
 }
