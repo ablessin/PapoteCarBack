@@ -1,10 +1,7 @@
 package com.greenGo.greenGo.controller;
 
 import com.greenGo.greenGo.modele.*;
-import com.greenGo.greenGo.service.ChatService;
-import com.greenGo.greenGo.service.NotificationsService;
-import com.greenGo.greenGo.service.TrajetService;
-import com.greenGo.greenGo.service.UserService;
+import com.greenGo.greenGo.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +19,7 @@ public class ChatController {
     private final NotificationsService notificationsService;
     private final TrajetService trajetService;
     private final UserService userService;
+    private final ObjectPassagerService objectPassagerService;
 
     @PostMapping("/create")
     @CrossOrigin(origins = "http://localhost:3000")
@@ -65,6 +63,18 @@ public class ChatController {
                 for (Chat test: entry.getValue().get(0).getChats()) {
                     Chat chat = chatService.lireUn(test.getId());
                     chatList.add(chat);
+                }
+            }
+        }
+
+        List<ObjectPassager> objectPassagers = objectPassagerService.lireByUser(user);
+
+        if (objectPassagers.size() > 0) {
+            for (ObjectPassager objectPassager: objectPassagers) {
+                Trajet trajet = trajetService.lireUn(objectPassager.getTrajet().getId());
+                for (Chat chat: trajet.getChats()) {
+                    Chat chat1 = chatService.lireUn(chat.getId());
+                    chatList.add(chat1);
                 }
             }
         }
