@@ -1,10 +1,7 @@
 package com.greenGo.greenGo.controller;
 
 import com.greenGo.greenGo.modele.*;
-import com.greenGo.greenGo.service.NotificationsService;
-import com.greenGo.greenGo.service.ObjectPassagerService;
-import com.greenGo.greenGo.service.TrajetService;
-import com.greenGo.greenGo.service.UserService;
+import com.greenGo.greenGo.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +22,7 @@ public class TrajetController {
     private final NotificationsService notificationsService;
     private final UserService userService;
     private final ObjectPassagerService objectPassagerService;
+    private final ChatService chatService;
 
     @PostMapping("/create")
     @CrossOrigin(origins = "http://localhost:3000")
@@ -93,6 +91,13 @@ public class TrajetController {
          Trajet trajet = trajetService.lireUn(id);
          log.warn(trajet.toString());
         return trajet;
+    }
+
+    @GetMapping("/read/chat/{chatId}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Trajet readByChat(@PathVariable Long chatId) {
+        Chat chat = chatService.lireUn(chatId);
+        return trajetService.lireByChat(chat);
     }
 
     @GetMapping("/search/{champs}/{value}")

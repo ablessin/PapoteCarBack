@@ -1,9 +1,6 @@
 package com.greenGo.greenGo.service;
 
-import com.greenGo.greenGo.modele.ObjectPassager;
-import com.greenGo.greenGo.modele.PlaceChamp;
-import com.greenGo.greenGo.modele.Trajet;
-import com.greenGo.greenGo.modele.User;
+import com.greenGo.greenGo.modele.*;
 
 import java.util.List;
 
@@ -15,6 +12,8 @@ public interface TrajetService {
     List<Trajet> search(PlaceChamp champ, String value);
 
     List<Trajet> lireByUser(User user);
+
+    Trajet lireByChat(Chat chat);
 
     Trajet lireUn(Long id);
 

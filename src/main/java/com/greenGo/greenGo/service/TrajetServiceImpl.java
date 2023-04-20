@@ -1,15 +1,13 @@
 package com.greenGo.greenGo.service;
 
-import com.greenGo.greenGo.modele.ObjectPassager;
-import com.greenGo.greenGo.modele.PlaceChamp;
-import com.greenGo.greenGo.modele.Trajet;
-import com.greenGo.greenGo.modele.User;
+import com.greenGo.greenGo.modele.*;
 import com.greenGo.greenGo.repository.StepRepository;
 import com.greenGo.greenGo.repository.TrajetRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -32,6 +30,11 @@ public class TrajetServiceImpl implements TrajetService{
     @Override
     public List<Trajet> lireByUser(User user) {
         return trajetRepository.findTrajetsByDriver(user);
+    }
+
+    @Override
+    public Trajet lireByChat(Chat chat) {
+        return trajetRepository.findByChats(chat);
     }
 
     @Override
